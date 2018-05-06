@@ -1,6 +1,6 @@
-let circle;
+let circles = [];
 
-function setup(){
+function setup() {
   let size = createVector(800, 800);
   createCanvas(size.x, size.y);
 
@@ -8,17 +8,27 @@ function setup(){
   angleMode(DEGREES);
   frameRate(10);
   ellipseMode(RADIUS);
+  textAlign(CENTER, CENTER);
 
-  circle = new RandomCircle(p5.Vector.div(size, 2), 100);
+  circles.push(new RandomCircle(createVector(200, 200), 100));
+  circles.push(new OrderedCircle(createVector(600, 200), 100));
+  circles.push(new PreciseCircle(createVector(200, 600), 100));
+
+  frameRate(5);
 }
 
-function draw(){
+function draw() {
   background(255);
-  fill(0, 0, 255);
-  ellipse(400, 400, 100);
-  fill(255, 0, 0);
-  circle.addPoint();
-  circle.show();
+  for (let circle of circles) {
+    let center = circle.center;
+    fill(0, 0, 255);
+    ellipse(center.x, center.y, circle.radius);
 
-  text(circle.getPointsLeft(), 40, 40);
+    fill(255, 0, 0);
+    circle.addPoint();
+    circle.show();
+
+    fill(255);
+    text(circle.getPointsLeft(), center.x, center.y);
+  }
 }
