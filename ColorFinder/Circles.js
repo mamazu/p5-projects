@@ -1,56 +1,56 @@
-class Point{
-	constructor(position, pointColor){
+class Area {
+	constructor(position, pointColor) {
 		this.center = position;
-
-		if(pointColor === undefined){
-			this.color = color(random(255), random(255), random(255));
-		} else {
-			this.color = pointColor;
-		}
+		this.pointColor = color(random(255), random(255), random(255));
 	}
 
-	draw(){
-		fill(invertColor(this.color));
+	draw() {
+		fill(invertColor(this.pointColor));
 		ellipse(this.center.x, this.center.y, 5);
 	}
 }
 
-class CircleList{
-	constructor(){
+class AreaList {
+	constructor(numberOfAreas) {
+		this.points = [];
+		this.generatePoints(numberOfAreas);
+	}
+
+	clear() {
 		this.points = [];
 	}
 
-	clear(){
-		this.points = [];
-	}
-
-	addCircle(circle){
+	addCircle(circle) {
 		this.points.push(circle);
 	}
 
-	getDist(vec, point){
-		return pow(vec.x - point.center.x, 2)+pow(vec.y - point.center.y, 2);
+	getDistSquared(vec, point) {
+		return pow(vec.x - point.center.x, 2) + pow(vec.y - point.center.y, 2);
 	}
 
-	getColor(x, y){
+	generatePoints(numberOfPoints) {
+
+	}
+
+	getColor(x, y) {
 		let color = undefined;
 		let distance = Infinity;
 		let pos = createVector(x, y);
-		this.points.forEach((circle) => {
-			let d = this.getDist(pos, circle);
-			if(d < distance){
+		this.points.forEach((area) => {
+			let d = this.getDistSquared(pos, area);
+			if (d < distance) {
 				distance = d;
-				color = circle.color;
+				color = area.pointColor;
 			}
 		});
 		return color;
 	}
 
-	draw(){
-		for(let x = 0; x < width; x++){
-			for(let y = 0; y < height; y++){
+	draw() {
+		for (let x = 0; x < width; x++) {
+			for (let y = 0; y < height; y++) {
 				let color = this.getColor(x, y);
-				if(color !== undefined)
+				if (color !== undefined)
 					set(x, y, color)
 			}
 		}

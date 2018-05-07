@@ -1,35 +1,32 @@
-var circleList = new CircleList();
+var circleList = null;
 
-function setup(){
+function setup() {
+	circleList = new AreaList();
 	createCanvas(800, 800);
-	updateCircleList();
-	frameRate(5);
+	generateCircleList();
+	noLoop();
+
+	document.getElementById('numberOfPoints').addEventListener('change', draw);
 }
 
-function draw(){
+function draw() {
 	noStroke();
 	circleList.draw();
 }
 
-function invertColor(inputColor){
+function invertColor(inputColor) {
 	let levels = [];
-	for(let i = 0; i < 3; i++){
+	for (let i = 0; i < 3; i++) {
 		levels.push(abs(inputColor.levels[i] - 255));
 	}
 	return color(...levels)
 }
 
-function updateCircleList(){
+function generateCircleList() {
 	circleList.clear();
-	for(let i = 0; i < getCircleCount(); i++){
+	let areasCount = document.getElementById('numberOfPoints').value;
+	for (let i = 0; i < areasCount; i++) {
 		let randomVector = createVector(random(width), random(height));
-		let c = new Point(randomVector);
-		circleList.addCircle(c);
+		circleList.addCircle(new Area(randomVector));
 	}
-}
-
-function getCircleCount(){
-	let value = document.getElementById('numberOfPoints').value;
-	console.log(value);
-	return value;
 }
