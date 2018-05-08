@@ -7,8 +7,7 @@ class Particle {
     this.movement = this.randomUpwardsVector();
     this.movement.setMag(random(1, 2));
 
-    let variance = random(settings.variance) / settings.variance;
-    this.lifetime = settings.lifeTime * variance;
+    this.lifetime = randomize(settings.lifeTime);
   }
 
   randomUpwardsVector() {
@@ -42,17 +41,17 @@ class Explosion {
   constructor(position) {
     this.pos = position;
     this.particles = [];
-    this.create_particles(randomize(settings.particleCount));
-    this.color = this.get_random_color();
+    this.createParticles(randomize(settings.particleCount));
+    this.color = this.getRandomColor();
   }
 
-  create_particles(amount) {
+  createParticles(amount) {
     for (let i = 0; i < amount; i++) {
       this.particles.push(new Particle(this.pos));
     }
   }
 
-  get_random_color() {
+  getRandomColor() {
     let levels = [];
     do {
       levels = Array(3).fill(0).map(x => random(255));
@@ -80,27 +79,31 @@ class Rocket {
     const x = random(height * 0.05, height * 0.95);
     const y = random(width * 0.05, width * 0.95);
     this.end_pos = createVector(x, y);
-
-    if (position === undefined) {
-      this.pos = createVector(this.end_pos.x, height);
-    } else {
-      this.pos = position.copy();
-    }
+    this.setPosition(position);
 
     this.size = 5;
     this.speed = randomize(settings.rocketSpeed);
   }
 
+  setPosition(position) {
+    if (position === undefined) {
+      // Start at the lower edge of the canvas
+      this.pos = createVector(this.end_pos.x, height);
+    } else {
+      this.pos = position.copy();
+    }
+  }
+
   update() {
     this.pos.y -= this.speed;
+
+    if (this.isDone()) {
+      renderable.push(new Explosion(this.pos));
+    }
   }
 
   isDone() {
-    if (this.pos.y < this.end_pos.y) {
-      renderable.push(new Explosion(this.pos));
-      return true;
-    }
-    return false;
+    return this.pos.y < this.end_pos.y;
   }
 
   draw() {

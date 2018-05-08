@@ -16,12 +16,11 @@ function setup() {
 
 function draw() {
   background(0);
+
   renderable.forEach(obj => obj.update());
-  for (let i = renderable.length - 1; i >= 0; i--) {
-    if (renderable[i].isDone()) {
-      renderable.splice(i, 1);
-    }
-  }
+
+  renderable = renderable.filter((item) => !item.isDone());
+
   renderable.forEach(obj => obj.draw());
 
   if (frameCount > nextRocket) {
