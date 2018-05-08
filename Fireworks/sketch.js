@@ -4,9 +4,9 @@ let nextRocket = 0;
 let settings = {
   "variance": 0.2,
   "timeBetweenRockets": 100,
-  "particleCount": 100,
+  "particleCount": 400,
   "rocketSpeed": 3,
-  "lifeTime": 1000
+  "lifeTime": 200
 }
 
 function setup() {
@@ -18,7 +18,7 @@ function draw() {
   background(0);
   renderable.forEach(obj => obj.update());
   for (let i = renderable.length - 1; i >= 0; i--) {
-    if (renderable[i].is_done()) {
+    if (renderable[i].isDone()) {
       renderable.splice(i, 1);
     }
   }

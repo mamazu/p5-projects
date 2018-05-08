@@ -1,24 +1,36 @@
 class Particle {
   constructor(position) {
     this.pos = position.copy();
-    this.size = 5;
+    this.size = 2;
 
     // Create movement
-    let x = random(-1, 1);
-    let y = random(-1, 1);
-    this.movement = createVector(x, y);
+    this.movement = this.randomUpwardsVector();
     this.movement.setMag(random(1, 2));
+
+    let variance = random(settings.variance) / settings.variance;
+    this.lifetime = settings.lifeTime * variance;
   }
 
-  is_inside_canvas() {
+  randomUpwardsVector() {
+    let x = random(-1, 1);
+    let y = random(-1, .35);
+    return createVector(x, y);
+  }
+
+  isDone() {
+    if (this.lifetime <= 0) {
+      return true;
+    }
+
     let x_out = this.pos.x < -this.size || this.pos.x > width + this.size;
     let y_out = this.pos.y < -this.size || this.pos.y > height + this.size;
 
-    return !(x_out || y_out);
+    return x_out || y_out;
   }
 
   update() {
     this.pos.add(this.movement);
+    this.lifetime--;
   }
 
   draw() {
@@ -41,16 +53,20 @@ class Explosion {
   }
 
   get_random_color() {
-    return color(random(255), random(255), random(255));
+    let levels = [];
+    do {
+      levels = Array(3).fill(0).map(x => random(255));
+    } while (average(levels) < 255 / 2)
+    return color(...levels);
   }
 
-  is_done() {
+  isDone() {
     return this.particles.length === 0;
   }
 
   update() {
     this.particles.forEach(particle => particle.update());
-    this.particles = this.particles.filter(particle => particle.is_inside_canvas());
+    this.particles = this.particles.filter(particle => !particle.isDone());
   }
 
   draw() {
@@ -61,8 +77,8 @@ class Explosion {
 
 class Rocket {
   constructor(position) {
-    let x = random(height * 0.05, height * 0.95);
-    let y = random(width * 0.05, width * 0.95);
+    const x = random(height * 0.05, height * 0.95);
+    const y = random(width * 0.05, width * 0.95);
     this.end_pos = createVector(x, y);
 
     if (position === undefined) {
@@ -79,7 +95,7 @@ class Rocket {
     this.pos.y -= this.speed;
   }
 
-  is_done() {
+  isDone() {
     if (this.pos.y < this.end_pos.y) {
       renderable.push(new Explosion(this.pos));
       return true;
@@ -91,4 +107,8 @@ class Rocket {
     fill(255);
     ellipse(this.pos.x, this.pos.y, this.size);
   }
+}
+
+function average(array) {
+  return array.reduce((p, c) => p + c, 0) / array.length;
 }
