@@ -3,14 +3,15 @@ let nextRocket = 0;
 
 let settings = {
   "variance": 0.2,
-  "timeBetweenRockets": 100,
+  "timeBetweenRockets": 50,
   "particleCount": 400,
   "rocketSpeed": 3,
   "lifeTime": 200
 }
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(windowWidth, windowHeight);
+
   ellipseMode(RADIUS);
 }
 
@@ -39,4 +40,14 @@ function randomize(number) {
   let lower = 1 - settings.variance;
   let higher = 1 + settings.variance;
   return random(number * lower, number * higher);
+}
+
+function keyPressed(event) {
+  if (event.keyCode === 70) {
+    fullscreen(!fullscreen());
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
