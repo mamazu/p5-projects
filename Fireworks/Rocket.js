@@ -17,14 +17,7 @@ class Particle {
   }
 
   isDone() {
-    if (this.lifetime <= 0) {
-      return true;
-    }
-
-    let x_out = this.pos.x < -this.size || this.pos.x > width + this.size;
-    let y_out = this.pos.y < -this.size || this.pos.y > height + this.size;
-
-    return x_out || y_out;
+    return this.lifetime <= 0;
   }
 
   update() {
@@ -46,9 +39,7 @@ class Explosion {
   }
 
   createParticles(amount) {
-    for (let i = 0; i < amount; i++) {
-      this.particles.push(new Particle(this.pos));
-    }
+    this.particles = Array(floor(amount)).fill(0).map(x => new Particle(this.pos));
   }
 
   getRandomColor() {
@@ -61,6 +52,10 @@ class Explosion {
 
   isDone() {
     return this.particles.length === 0;
+  }
+
+  getParticleCount() {
+    return this.particles.length;
   }
 
   update() {
@@ -76,8 +71,8 @@ class Explosion {
 
 class Rocket {
   constructor(position) {
-    const x = random(height * 0.05, height * 0.95);
-    const y = random(width * 0.05, width * 0.95);
+    const x = random(width * 0.03, width * 0.97);
+    const y = random(height * 0.05, height * 0.95);
     this.end_pos = createVector(x, y);
     this.setPosition(position);
 

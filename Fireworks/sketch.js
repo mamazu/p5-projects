@@ -3,10 +3,10 @@ let nextRocket = 0;
 
 let settings = {
   "variance": 0.2,
-  "timeBetweenRockets": 50,
-  "particleCount": 400,
+  "timeBetweenRockets": 20,
+  "particleCount": 300,
   "rocketSpeed": 3,
-  "lifeTime": 200
+  "lifeTime": 150
 }
 
 function setup() {
@@ -50,4 +50,17 @@ function keyPressed(event) {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function getParticleCount() {
+  let count = 0;
+  renderable.forEach((element) => {
+    if (element.getParticleCount) {
+      count += element.getParticleCount();
+    } else {
+      count += 1;
+    }
+  });
+
+  return count;
 }
