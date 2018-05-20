@@ -24,10 +24,12 @@ class Matrix {
 
 	makeStairs() {
 		this.pivot();
-		for (let i = 1; i < this.data.length; i++) {
-			this.data[i] = subtractArray(this.getRow(0), this.getRow(i));
+		for (let start = 0; start < this.data.length; start++) {
+			for (let i = start + 1; i < this.data.length; i++) {
+				this.data[i] = subtractArray(this.getRow(start), this.getRow(i));
+			}
+			this.pivot();
 		}
-		this.pivot();
 	}
 
 	getRow(index, factor = 1) {
