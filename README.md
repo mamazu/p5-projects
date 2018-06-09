@@ -1,3 +1,3 @@
-# P5 Prokect storage
+# P5 Project storage
 This repo is a collection of p5 based projects.
 
