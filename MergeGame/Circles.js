@@ -71,7 +71,7 @@ class CircleList {
 	}
 
 	length() {
-		return this.circles.length;
+		return this.circles.map(circleList => circleList.length).reduce((x, y) => x + y);
 	}
 
 	draw() {

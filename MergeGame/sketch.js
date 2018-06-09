@@ -24,7 +24,7 @@ function draw() {
 
   textSize(45);
   fill(255, 0, 255);
-  text(circles.getValue(), 45, 45);
+  text(circles.getValue(), width / 2, 45);
 }
 
 function mousePressed() {
