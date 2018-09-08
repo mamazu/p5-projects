@@ -22,7 +22,9 @@ class Planet {
       let otherDirection = p5.Vector.mult(direction, -1);
       this.position.add(otherDirection);
       this.movement = otherDirection;
-    }
+    } else {
+	  this.movement = createVector();
+	}
   }
 
   avoidCollisons(planets){
