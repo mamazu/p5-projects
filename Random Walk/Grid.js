@@ -1,12 +1,10 @@
 class Grid {
 	constructor(width, height) {
-		this.fields = new Array(height);
-		for(let y = 0; y < height; y++){
-			this.fields[y] = new Array(width);
-		}
+		this.fields = {}
 
 		this.height = height;
 		this.width = width;
+		this.lastField = undefined;
 	}
 
 	/**
@@ -14,33 +12,63 @@ class Grid {
 	 * @param {p5.Vector} point 
 	 */
 	update(point) {
-		this.fields[point.y][point.x] = true
+		let positionString = `${point.x}|${point.y}`;
+		if (this.fields[positionString] === undefined) {
+			this.fields[positionString] = 0
+		}
+		this.fields[positionString]++;
+		this.lastField = point;
 	}
 
-	contains(point){
-		if(point.x < 0 || point.x >= this.width){
+	contains(point) {
+		if (point.x < 0 || point.x >= this.width) {
 			return false;
 		}
-		if(point.y < 0 || point.t >= this.height){
+		if (point.y < 0 || point.t >= this.height) {
 			return false;
 		}
 
 		return true;
 	}
 
-	draw() {
-		stroke(255);
-		let fieldHeight = (height - 1) / this.height;
-		let fieldWidth = (width - 1) / this.width;
-		for (let y = 0; y < this.height; y++) {
-			for (let x = 0; x < this.width; x++) {
-				if(this.fields[y][x] != undefined){
-					fill(255, 0, 0);
-				}else{
-					fill(0);
-				}
-				rect(fieldWidth * x, fieldHeight * y, fieldWidth, fieldHeight);
-			}
+	getScale(){
+		let fieldHeight = height / this.height;
+		let fieldWidth = width / this.width;
+
+		return [fieldHeight, fieldWidth];
+	}
+
+	getDistanceToCenter(point) {
+		return dist(this.width / 2, this.height / 2, point.x, point.y);
+	}
+
+	_getHeat(timesVisted) {
+		if (timesVisted > 10) {
+			return [255, 0, 0];
 		}
+		let ratio = 2 * timesVisted / 10
+		let b = int(max(0, 255 * (1 - ratio)))
+		let r = int(max(0, 255 * (ratio - 1)))
+		let g = 255 - b - r
+		return [r, g, b]
+	}
+
+	draw() {
+		noStroke();
+		let fieldHeight, fieldWidth;
+		[fieldHeight, fieldWidth] = this.getScale();
+
+		for (let field in this.fields) {
+			let x, y;
+			let rectColor = this._getHeat(this.fields[field])
+
+			fill(...rectColor);
+			[x, y] = field.split('|');
+			rect(fieldWidth * Number(x), fieldHeight * Number(y), fieldWidth, fieldHeight);
+		}
+
+		// drawing the current field
+		fill(0, 255, 0);
+		rect(fieldWidth * this.lastField.x, fieldHeight * this.lastField.y, fieldWidth, fieldHeight);
 	}
 }
