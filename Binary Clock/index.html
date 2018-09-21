@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sine Waver</title>
+    <script src="p5.min.js"></script>
+    <script src="p5.dom.js"></script>
+    <script src="Clock.js"></script>
+    <script src="script.js"></script>
+    <style>
+      body{
+        background: black;
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        border: 1px white solid;
+      }
+      input{
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="range" min="1" max="100" name="speed" onchange="setSpeed(event)" value="1" id="speed" />
+  </body>
+</html>
