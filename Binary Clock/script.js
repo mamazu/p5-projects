@@ -1,15 +1,13 @@
-let speed = 1;
-let clock = new Clock(2);
-
+let clock = new Clock(3);
 
 function setup() {
-  speed = select('#speed').value();
+  let speed = select('#speed').value();
+  frameRate(speed);
+
   createCanvas(700, 700);
   textAlign(CENTER, CENTER);
   textSize(100);
   fill(255);
-  frameRate(60);
-  // frameRate(1);
 }
 
 function draw() {
@@ -19,5 +17,6 @@ function draw() {
 }
 
 function setSpeed(e) {
-  speed = Number(e.target.value);
+  let speed = Number(e.target.value);
+  frameRate(speed);
 }
