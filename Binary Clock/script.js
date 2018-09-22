@@ -1,4 +1,4 @@
-let clock = new Clock(3);
+let clock = new Clock(2);
 
 function setup() {
   let speed = select('#speed').value();
