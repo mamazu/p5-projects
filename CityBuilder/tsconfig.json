@@ -1,0 +1,24 @@
+{
+    // "compilerOptions": {
+    //     // "module": "commonjs",
+    //     "target": "es6",
+    //     "noImplicitAny": false,
+    //     "sourceMap": true,
+    //     out
+    // }
+
+    "compilerOptions": {
+        "target": "ES5",
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "./build/build.js",
+        "sourceRoot": "./sketch/",
+        "rootDir": "./sketch/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true
+      }
+}
