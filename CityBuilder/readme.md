@@ -1,19 +1,6 @@
-# Starter Project 
-## p5.js with Typescript
-Project to quickly get something working in [p5.js](https://p5js.org/) and [typescript](https://www.typescriptlang.org/)
+# City Simulation
+This is a very basic city simulation game written in Typescript based in the [Starter Project of Gaweph](https://github.com/Gaweph/p5-typescript-starter).
 
-## Getting Started
-
-### Installing
-
-```
-git clone https://github.com/Gaweph/p5-typescript-starter.git
-npm install
-```
-
-### Usage
-
-```
-npm start
-http://localhost:3000
-```
+## Using
+* Install it with: `npm install`
+* Run it with `npm start` and the browser will open
