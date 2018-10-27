@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/addons/p5.dom.min.js"></script>
+        <script src="build/build.js"></script>
+
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            body {
+                background: url("media/background.jpeg") no-repeat center center fixed;
+
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+            #clues {
+                background: white;
+                padding: 0.5em 0;
+                margin-bottom: 1em;
+            }
+        </style>
+        <script></script>
+    </head>
+    <body>
+        <div id="clues">
+            <div style="display: inline-block">
+                <h2>Down</h2>
+                <div class="down"></div>
+            </div>
+            <div style="display: inline-block">
+                <h2>Across</h2>
+                <div class="across"></div>
+            </div>
+        </div>
+    </body>
+</html>
