@@ -2,7 +2,11 @@ let grid;
 let player;
 let distanceP;
 let frameCountP;
+
+let speedSlider;
 let distances = [];
+
+let itterations = 0;
 
 function setup() {
   createCanvas(700, 700);
@@ -15,18 +19,32 @@ function setup() {
   grid = new Grid(gridWidth, gridHeight);
   player = createVector(gridWidth / 2, gridHeight / 2);
 
-  
+  speedSlider = createSlider(0, 50, 1)
+
   ellipseMode(CENTER);
   frameRate(100);
 }
 
 function draw() {
-  distances.push(grid.getDistanceToCenter(player));
+  for(let i = 0; i < speedSlider.value(); i++) {
+    distances.push(grid.getDistanceToCenter(player));
 
-  // Updating and drawing the grid
-  grid.update(player);
+    // Updating and drawing the grid
+    grid.update(player);
+    itterations++;
 
-  background(0);
+      background(0);
+
+      // Calculating the next position and checking if it is in bounds
+      nextPlayerPosition(player);
+
+      if (!grid.contains(player)) {
+        alert("Game over");
+        noLoop();
+        break;
+      }
+  }
+ 
   grid.draw();
 
   // Pointing at the current player
@@ -38,18 +56,10 @@ function draw() {
 
   // Updating the html information
   renderHTML();
-
-  // Calculating the next position and checking if it is in bounds
-  nextPlayerPosition(player);
-
-  if (!grid.contains(player)) {
-    alert("Game over");
-    noLoop();
-  }
 }
 
 function renderHTML() {
-  frameCountP.html(`Itteration : ${frameCount} @ ${frameRate().toFixed(1)}`);
+  frameCountP.html(`Itteration : ${itterations} @ ${frameRate().toFixed(1)} * ${speedSlider.value()}`);
   distanceP.html(`Average Distance : ${getAverageDistance(distances).toFixed(2)}`);
 }
 
