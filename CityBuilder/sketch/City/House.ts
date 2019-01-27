@@ -1,97 +1,103 @@
 type pVector = p5.Vector;
 
 enum HouseType {
-	Home,
-	Office,
+    Home,
+    Office,
 };
 
 function houseTypePrinter(houseType: HouseType): string {
-	switch (houseType){
-		case HouseType.Home:
-			return 'home'
-		case HouseType.Office:
-			return 'office';
-	}
+    switch (houseType){
+        case HouseType.Home:
+            return 'home'
+        case HouseType.Office:
+            return 'office';
+    }
 }
 
 class House implements Drawable {
-	private readonly position: pVector;
-	private readonly size: pVector;
-	private readonly capacity: number;
-	private currentInhabitants: Entity[] = [];
-	private type: HouseType;
+    private readonly position: pVector;
+    private readonly size: pVector;
+    private readonly capacity: number;
+    private currentInhabitants: Entity[] = [];
+    private type: HouseType;
 
-	constructor(position: pVector, size: pVector, capacity: number, houseType?: HouseType) {
-		this.position = position;
-		this.size = size;
-		this.capacity = capacity;
+    constructor(position: pVector, size: pVector, capacity: number, houseType?: HouseType) {
+        this.position = position;
+        this.size = size;
+        this.capacity = capacity;
 
-		if (houseType === undefined) {
-			this.type = HouseType.Home;
-		} else {
-			this.type = houseType;
-		}
-	}
+        if (houseType === undefined) {
+            this.type = HouseType.Home;
+        } else {
+            this.type = houseType;
+        }
+    }
 
-	getPosition(): pVector {
-		return p5.Vector.add(this.position, p5.Vector.mult(this.size, .5));
-	}
+    contains(position: pVector): boolean {
+        const difference = p5.Vector.sub(position, this.position);
 
-	getLoad(): number {
-		return this.currentInhabitants.length / this.capacity;
-	}
+        return difference.x >= 0 && difference.x <= this.size.x && difference.y >= 0 && difference.y <= this.size.y;
+    }
 
-	isFull(): boolean {
-		return this.currentInhabitants.length === this.capacity;
-	}
+    getPosition(): pVector {
+        return p5.Vector.add(this.position, p5.Vector.mult(this.size, .5));
+    }
 
-	getType(): HouseType
-	{
-		return this.type;
-	}
+    getLoad(): number {
+        return this.currentInhabitants.length / this.capacity;
+    }
 
-	isHome(): boolean {
-		return this.type === HouseType.Home;
-	}
+    isFull(): boolean {
+        return this.currentInhabitants.length === this.capacity;
+    }
 
-	isOffice(): boolean {
-		return this.type === HouseType.Office;
-	}
+    getType(): HouseType
+    {
+        return this.type;
+    }
 
-	addInhabitant(inhabitant: Entity) {
-		this.currentInhabitants.push(inhabitant);
-	}
+    isHome(): boolean {
+        return this.type === HouseType.Home;
+    }
 
-	removeAllInhabitants(): void {
-		let removeMethod: (e: Entity) => void;
-		switch (this.type) {
-			case HouseType.Home:
-				removeMethod = (e: Entity) => e.setHome(undefined);
-				break;
-			case HouseType.Office:
-				removeMethod = (e: Entity) => e.setWork(undefined);
-				break;
-			default:
-				console.error('Invalid house type');
-				return;
-		}
-		this.currentInhabitants.forEach(removeMethod);
-	}
+    isOffice(): boolean {
+        return this.type === HouseType.Office;
+    }
 
-	private getCapacityColor(p: p5): p5.Color {
-		const red = 255 * this.currentInhabitants.length / this.capacity;
-		const green = 255 - red;
+    addInhabitant(inhabitant: Entity) {
+        this.currentInhabitants.push(inhabitant);
+    }
 
-		return p.color(red, green, 0);
-	}
+    removeAllInhabitants(): void {
+        let removeMethod: (e: Entity) => void;
+        switch (this.type) {
+            case HouseType.Home:
+                removeMethod = (e: Entity) => e.setHome(undefined);
+                break;
+            case HouseType.Office:
+                removeMethod = (e: Entity) => e.setWork(undefined);
+                break;
+            default:
+                console.error('Invalid house type');
+                return;
+        }
+        this.currentInhabitants.forEach(removeMethod);
+    }
 
-	draw(p: p5) {
-		p.fill(this.getCapacityColor(p));
-		p.rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    private getCapacityColor(p: p5): p5.Color {
+        const red = 255 * this.currentInhabitants.length / this.capacity;
+        const green = 255 - red;
 
-		const typeString = this.type === HouseType.Home ? 'L' : 'W';
-		const capacityString = `${typeString}\n${this.currentInhabitants.length}/${this.capacity}`;
-		p.fill(p.color(0));
-		p.text(capacityString, this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
-	}
+        return p.color(red, green, 0);
+    }
+
+    draw(p: p5) {
+        p.fill(this.getCapacityColor(p));
+        p.rect(this.position.x, this.position.y, this.size.x, this.size.y);
+
+        const typeString = this.type === HouseType.Home ? 'L' : 'W';
+        const capacityString = `${typeString}\n${this.currentInhabitants.length}/${this.capacity}`;
+        p.fill(p.color(0));
+        p.text(capacityString, this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
+    }
 }
