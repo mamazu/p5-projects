@@ -14,7 +14,7 @@ function houseTypePrinter(houseType: HouseType): string {
     }
 }
 
-class House implements Drawable {
+class House implements Drawable, GridObject {
     private readonly position: pVector;
     private readonly size: pVector;
     private readonly capacity: number;
@@ -33,13 +33,19 @@ class House implements Drawable {
         }
     }
 
-    contains(position: pVector): boolean {
-        const difference = p5.Vector.sub(position, this.position);
-
-        return difference.x >= 0 && difference.x <= this.size.x && difference.y >= 0 && difference.y <= this.size.y;
+    getDimensions(): Dimensions {
+        return {'position': this.position, 'size': this.size };
     }
 
-    getPosition(): pVector {
+    overlaps(other: GridObject): boolean {
+        const otherDimensions = other.getDimensions();
+        const xMatch = this.position.x < otherDimensions.position.x + otherDimensions.position.x && this.position.x + this.size.x > otherDimensions.position.x;
+        const yMatch = this.position.y > otherDimensions.position.y + otherDimensions.position.y && this.position.y + this.size.y < otherDimensions.position.y;
+
+        return xMatch && yMatch;
+    }
+
+    getCenter(): pVector {
         return p5.Vector.add(this.position, p5.Vector.mult(this.size, .5));
     }
 

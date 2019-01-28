@@ -7,8 +7,11 @@ class City implements Drawable {
     private houses: House[] = [];
     private citizens: Entity[] = [];
     private readonly houseFinder = new HouseFinder();
+    private readonly grid: Grid;
 
     constructor() {
+        this.grid = new Grid();
+
         this.addHouse(new House(
             sketchP.createVector(30, 30),
             sketchP.createVector(40, 40),
@@ -28,7 +31,9 @@ class City implements Drawable {
     }
 
     addHouse(house: House): void {
-        this.houses.push(house);
+        if(this.grid.addObject(house)) {
+            this.houses.push(house);
+        }
     }
 
     removeHouse(house: House): void {
@@ -50,16 +55,6 @@ class City implements Drawable {
             citizen.setWork(office);
             office.addInhabitant(citizen);
         }
-    }
-
-    isBlocked(position: p5.Vector): boolean {
-        for(let house of this.houses) {
-            if(house.contains(position)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     findHouse(position: p5.Vector, houseType: HouseType): House | undefined {
