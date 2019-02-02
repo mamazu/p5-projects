@@ -17,21 +17,23 @@ class City implements Drawable {
             sketchP.createVector(40, 40),
             5
         ));
-        this.addHouse(new House(
-            sketchP.createVector(230, 30),
-            sketchP.createVector(40, 40),
-            5
-        ));
-        this.addHouse(new House(
-            sketchP.createVector(330, 330),
-            sketchP.createVector(40, 40),
-            10,
-            HouseType.Office
-        ));
+        // this.addHouse(new House(
+        //     sketchP.createVector(230, 30),
+        //     sketchP.createVector(40, 40),
+        //     5
+        // ));
+        // this.addHouse(new House(
+        //     sketchP.createVector(330, 330),
+        //     sketchP.createVector(40, 40),
+        //     10,
+        //     HouseType.Office
+        // ));
     }
 
+    getGrid(): Grid { return this.grid; }
+
     addHouse(house: House): void {
-        if(this.grid.addObject(house)) {
+        if (this.grid.addObject(house)) {
             this.houses.push(house);
         }
     }

@@ -6,7 +6,6 @@
     //     "sourceMap": true,
     //     out
     // }
-
     "compilerOptions": {
         "target": "ES6",
         "removeComments": true,
@@ -20,5 +19,5 @@
         "alwaysStrict": true,
         "strictNullChecks": true,
         "strictFunctionTypes": true
-      }
+    }
 }

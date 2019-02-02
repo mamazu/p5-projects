@@ -22,7 +22,7 @@ class Entity implements Drawable {
     }
 
     draw(p: p5): void {
-        // Drawing the enity itself
+        // Drawing the entity itself
         const size = 10;
         p.fill(p.color(0));
         p.rect(this.position.x, this.position.y, size, size);

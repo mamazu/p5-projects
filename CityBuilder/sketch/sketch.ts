@@ -1,6 +1,6 @@
 let sketch = (p: p5) => {
     let city: City;
-    let statDiv: HTMLElement|null;
+    let statDiv: HTMLElement | null;
 
     p.setup = () => {
         p.createCanvas(700, 700);
@@ -40,7 +40,7 @@ let sketch = (p: p5) => {
     };
 
     function updateStatistics(): void {
-        if(statDiv === null){
+        if (statDiv === null) {
             return;
         }
 

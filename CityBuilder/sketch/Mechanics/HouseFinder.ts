@@ -14,7 +14,7 @@ class HouseFinder {
             }
 
             let distance = p5.Vector.sub(position, house.getCenter()).magSq();
-            if(distance < bestDistance) {
+            if (distance < bestDistance) {
                 bestDistance = distance;
                 bestHouse = house;
             }

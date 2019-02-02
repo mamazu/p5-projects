@@ -1,4 +1,4 @@
-type pVector = p5.Vector;
+/// <reference path="../Grid/GridObject.ts" />
 
 enum HouseType {
     Home,
@@ -6,7 +6,7 @@ enum HouseType {
 };
 
 function houseTypePrinter(houseType: HouseType): string {
-    switch (houseType){
+    switch (houseType) {
         case HouseType.Home:
             return 'home'
         case HouseType.Office:
@@ -14,16 +14,13 @@ function houseTypePrinter(houseType: HouseType): string {
     }
 }
 
-class House implements Drawable, GridObject {
-    private readonly position: pVector;
-    private readonly size: pVector;
+class House extends GridObject implements Drawable {
     private readonly capacity: number;
     private currentInhabitants: Entity[] = [];
     private type: HouseType;
 
-    constructor(position: pVector, size: pVector, capacity: number, houseType?: HouseType) {
-        this.position = position;
-        this.size = size;
+    constructor(position: p5.Vector, size: p5.Vector, capacity: number, houseType?: HouseType) {
+        super(position, size);
         this.capacity = capacity;
 
         if (houseType === undefined) {
@@ -33,19 +30,7 @@ class House implements Drawable, GridObject {
         }
     }
 
-    getDimensions(): Dimensions {
-        return {'position': this.position, 'size': this.size };
-    }
-
-    overlaps(other: GridObject): boolean {
-        const otherDimensions = other.getDimensions();
-        const xMatch = this.position.x < otherDimensions.position.x + otherDimensions.position.x && this.position.x + this.size.x > otherDimensions.position.x;
-        const yMatch = this.position.y > otherDimensions.position.y + otherDimensions.position.y && this.position.y + this.size.y < otherDimensions.position.y;
-
-        return xMatch && yMatch;
-    }
-
-    getCenter(): pVector {
+    getCenter(): p5.Vector {
         return p5.Vector.add(this.position, p5.Vector.mult(this.size, .5));
     }
 
@@ -57,8 +42,7 @@ class House implements Drawable, GridObject {
         return this.currentInhabitants.length === this.capacity;
     }
 
-    getType(): HouseType
-    {
+    getType(): HouseType {
         return this.type;
     }
 
