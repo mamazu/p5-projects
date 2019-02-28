@@ -17,17 +17,20 @@ class City implements Drawable {
             sketchP.createVector(40, 40),
             5
         ));
-        // this.addHouse(new House(
-        //     sketchP.createVector(230, 30),
-        //     sketchP.createVector(40, 40),
-        //     5
-        // ));
-        // this.addHouse(new House(
-        //     sketchP.createVector(330, 330),
-        //     sketchP.createVector(40, 40),
-        //     10,
-        //     HouseType.Office
-        // ));
+        this.addHouse(new House(
+            sketchP.createVector(230, 200),
+            sketchP.createVector(40, 40),
+            1
+        ));
+        this.addHouse(new House(
+            sketchP.createVector(330, 300),
+            sketchP.createVector(40, 40),
+            10,
+            HouseType.Office
+        ));
+
+        this.addCitizen(new Entity(sketchP.createVector(330, 300)))
+        this.addCitizen(new Entity(sketchP.createVector(330, 300)))
     }
 
     getGrid(): Grid { return this.grid; }
@@ -35,6 +38,26 @@ class City implements Drawable {
     addHouse(house: House): void {
         if (this.grid.addObject(house)) {
             this.houses.push(house);
+        }
+        this.recalculate();
+    }
+
+    recalculate(): void {
+        for (let citizen of this.citizens) {
+            if (!citizen.hasHome()) {
+                const home = this.findHouse(citizen.getPosition(), HouseType.Home);
+                if (home !== undefined) {
+                    citizen.setHome(home);
+                    home.addInhabitant(citizen);
+                }
+            }
+            if (!citizen.hasWork()) {
+                const office = this.findHouse(citizen.getPosition(), HouseType.Office);
+                if (office !== undefined) {
+                    citizen.setWork(office);
+                    office.addInhabitant(citizen);
+                }
+            }
         }
     }
 
@@ -67,7 +90,7 @@ class City implements Drawable {
         );
     }
 
-    getStatistics(): object {
+    getStatistics(): CityStatistics {
         // Getting statistics about houses
         let houseStatistics: { [index: string]: number } = {};
         this.houses.forEach(house => {

@@ -1,11 +1,15 @@
 class Path {
-    private waypoints: p5.Vector[] = [];
+    private way_points: p5.Vector[] = [];
 
     constructor(start: p5.Vector) {
-        this.waypoints.push(start);
+        this.way_points.push(start);
     }
 
     public getWayPoints(): p5.Vector[] {
-        return this.waypoints;
+        return this.way_points;
+    }
+
+    public addWayPoint(way_point: p5.Vector): void {
+        this.way_points.push(way_point);
     }
 }
