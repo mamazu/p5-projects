@@ -6,9 +6,8 @@
     //     "sourceMap": true,
     //     out
     // }
-
     "compilerOptions": {
-        "target": "ES5",
+        "target": "ES6",
         "removeComments": true,
         "preserveConstEnums": true,
         "outFile": "./build/build.js",
@@ -20,5 +19,5 @@
         "alwaysStrict": true,
         "strictNullChecks": true,
         "strictFunctionTypes": true
-      }
+    }
 }
