@@ -1,0 +1,42 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+City	sketch/City.ts	/^class City implements Drawable {$/;"	c
+CityStatistics	sketch/City.ts	/^interface CityStatistics {$/;"	i
+Drawable	sketch/Interfaces/Drawable.ts	/^interface Drawable {$/;"	i
+Entity	sketch/City/Entity.ts	/^class Entity implements Drawable {$/;"	c
+House	sketch/City/House.ts	/^class House implements Drawable {$/;"	c
+HouseFinder	sketch/Mechanics/HouseFinder.ts	/^class HouseFinder {$/;"	c
+HouseType	sketch/City/House.ts	/^enum HouseType {$/;"	e
+Path	sketch/Mechanics/Path.ts	/^class Path {$/;"	c
+Pathfinder	sketch/Mechanics/PathFinder.ts	/^class Pathfinder {$/;"	c
+citizens	sketch/City.ts	/^    private citizens: Entity[] = [];$/;"	m
+currentInhabitants	sketch/City/House.ts	/^    private currentInhabitants: Entity[] = [];$/;"	m
+findClosestAvailableHouse	sketch/Mechanics/HouseFinder.ts	/^	public findClosestAvailableHouse($/;"	m
+findPath	sketch/Mechanics/PathFinder.ts	/^    public findPath(start: p5.Vector, end: p5.Vector): Path {$/;"	m
+getCapacityColor	sketch/City/House.ts	/^    private getCapacityColor(p: p5): p5.Color {$/;"	m
+getPosition	sketch/City/Entity.ts	/^	public getPosition(): p5.Vector { return this.position.copy().add(this.size \/ 2); }$/;"	m
+getWayPoints	sketch/Mechanics/Path.ts	/^    public getWayPoints(): p5.Vector[] {$/;"	m
+hasHome	sketch/City/Entity.ts	/^	public hasHome(): boolean { return this.home !== undefined; }$/;"	m
+hasWork	sketch/City/Entity.ts	/^	public hasWork(): boolean { return this.work !== undefined; }$/;"	m
+home	sketch/City/Entity.ts	/^	private home?: House;$/;"	m
+houseFilterFunction	sketch/Mechanics/HouseFinder.ts	/^type houseFilterFunction = (house: House) => boolean;$/;"	t
+houseTypePrinter	sketch/City/House.ts	/^function houseTypePrinter(houseType: HouseType): string {$/;"	f
+houses	sketch/City.ts	/^    private houses: House[] = [];$/;"	m
+pVector	sketch/City/House.ts	/^type pVector = p5.Vector;$/;"	t
+position	sketch/City/Entity.ts	/^	private position: p5.Vector;$/;"	m
+readonly	sketch/City.ts	/^    private readonly houseFinder = new HouseFinder();$/;"	m
+readonly	sketch/City/Entity.ts	/^	private readonly size = 10;$/;"	m
+readonly	sketch/City/House.ts	/^    private readonly capacity: number;$/;"	m
+readonly	sketch/City/House.ts	/^    private readonly position: pVector;$/;"	m
+readonly	sketch/City/House.ts	/^    private readonly size: pVector;$/;"	m
+readonly	sketch/Mechanics/PathFinder.ts	/^    private readonly city: City;$/;"	m
+setHome	sketch/City/Entity.ts	/^	public setHome(home?: House): void { this.home = home; }$/;"	m
+setWork	sketch/City/Entity.ts	/^	public setWork(work?: House): void { this.work = work; }$/;"	m
+type	sketch/City/House.ts	/^    private type: HouseType;$/;"	m
+updateStatistics	sketch/sketch.ts	/^    function updateStatistics(): void {$/;"	f
+waypoints	sketch/Mechanics/Path.ts	/^    private waypoints: p5.Vector[] = [];$/;"	m
+work	sketch/City/Entity.ts	/^	private work?: House;$/;"	m

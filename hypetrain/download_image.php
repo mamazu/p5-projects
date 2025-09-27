@@ -23,13 +23,14 @@ function getCachedOAuthToken(string $clientId, string $clientSecret): string {
     global $authenticationCacheFile;
     if (file_exists($authenticationCacheFile)) {
         $contents = json_decode(file_get_contents($authenticationCacheFile), true);
-        
-        $validUntil = new DateTime($contents['requested']);
-        $validUntil->modify('+ '.$contents['expires_in'] . ' seconds');
-        var_dump($validUntil);
-        
-        if ($validUntil > new DateTime()) {
-            return $contents['access_token'];
+
+        if ($contents['status'] === 200) {
+            $validUntil = new DateTime($contents['requested']);
+            $validUntil->modify('+ '.$contents['expires_in'] . ' seconds');
+
+            if ($validUntil > new DateTime()) {
+                return $contents['access_token'];
+            }
         }
     }
 
@@ -40,29 +41,35 @@ function getCachedOAuthToken(string $clientId, string $clientSecret): string {
     return $result['access_token'];
 }
 
-function getImage(string $clientId, string $oauthToken, string $username): array {
+function getImage(string $clientId, string $oauthToken, string $username) {
     $url = "https://api.twitch.tv/helix/users?login=".$username;
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $headers = array(
-        "Authorization: Bearer iys4s8ks4bhavlakr3qveb417s33c2",
+        "Authorization: Bearer $oauthToken",
         "Client-Id: $clientId",
     );
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $response = curl_exec($ch);
+    $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
     curl_close($ch);
 
-    return json_decode($response, true);
+    if ((int) ($responseCode / 200) !== 1) {
+        http_response_code($responseCode);
+    }
+
+    return json_decode($response, true, flags: JSON_THROW_ON_ERROR);
 }
 
 // ----------------------- MAIN PROGRAMM -----------------------------------
-$username = $_GET['username'];
+$username = strtolower($_GET['username']);
 
 $clientId = "8hwmkq0p8hyecvr27z0ztkrpz9apq8";
-$clientSecret= "iw4ac4zgmjm8mrin6063wwewyhpy5r";
+$clientSecret= "f15anibqw3qeznu4sg0sfd03yo0kbo";
 $authenticationCacheFile = 'authentiation.json';
 $cacheDirectory = 'users';
 
@@ -82,4 +89,5 @@ if ($imageUrl !== null) {
     die();
 }
 
+// Default image
 echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');

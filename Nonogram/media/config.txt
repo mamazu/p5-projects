@@ -1,0 +1,5 @@
+{A1|3}test|something that you do to code
+{D2|0}cute|not ugly
+{A2|0}cream|whipped ____
+{D4|3}toot|sound a pengin makes
+{D6|0}mean|the middle of something
